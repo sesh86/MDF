@@ -1,12 +1,11 @@
 import {Component, Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms'
 
 
 @Component({
   selector: 'my-app',
   // template: `<h1>Hello {{name}}</h1>`,
-  providers:[FormBuilder  ]
+  providers:[FormBuilder  ],
   templateUrl: './app.component.html',
 })
 export class AppComponent  {
