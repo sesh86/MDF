@@ -1,11 +1,46 @@
-<form [formGroup]="form">
-  <div formGroupName="name">
-    <input formControlName="first" placeholder="First">
-    <input formControlName="last" placeholder="Last">
+<style>form{margin:25px}</style>
+<h4>MDF : Form Builder</h4>
+<form [formGroup]="form" >
+  <table formGroupName="name">
+    <tr><td>Firstname</td><td><input formControlName="first" placeholder="First"></td></tr>
+    <tr><td>Lastname</td><td><input formControlName="last" placeholder="Last"></td></tr>
+    <tr><td>Email</td><td><input formControlName="email" placeholder="Email"></td></tr>
+  </table><br>
+  <div class="alert alert-danger" *ngIf="form.status!='VALID'">
+    Both First Name and Last Name are Mandatory and should have atleast 4 characters
   </div>
-  <input formControlName="email" placeholder="Email">
   <button>Submit</button>
 </form>
-
 <p>Value: {{ form.value | json }}</p>
 <p>Validation status: {{ form.status }}</p>
+<hr>
+<h4>MDF : Form Builder</h4>
+<form [formGroup]="userForm1">
+  <table>
+  <tr>
+  <td>Name</td><td><input type="text" formControlName="name"></td>
+  <td>
+    <div class="alert alert-danger" *ngIf="userForm1.controls['name'].errors && (userForm1.controls['name'].dirty || userForm1.controls['name'].touched)">
+      <span *ngIf="userForm1.controls['name'].hasError('required')">Please enter a name</span>
+      <span *ngIf="userForm1.controls['name'].hasError('minlength')">Please enter atleast 4 Letters</span><br>
+    </div>
+  </td>
+  </tr>
+  <tr><td>Email</td><td><input type="text" formControlName="email"></td><td>
+  <span class="alert alert-danger" *ngIf="userForm1.controls['email'].hasError('pattern')">Please enter a Valid email</span>
+</td></tr></table>
+</form>
+<hr>
+<h4>Template Driven Form Validation</h4>
+<!-- <form #userForm="ngForm" (ngSubmit)="sub(userForm.value)" novalidate> -->
+<form #userForm="ngForm" (ngSubmit)="sub(userForm.value)" ngNativeValidate>
+  Name<input  id="name_elem" type="text" name="name" #nameRef="ngModel"  ngModel required minlength="3"
+pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+  <button [disabled]="!userForm.form.valid" type="submit">Submit</button>
+    <div *ngIf="nameRef.errors && (nameRef.dirty || nameRef.touched)">
+      <div [hidden]="!nameRef.errors.required" class="alert alert-danger">Enter a Name</div>
+      <div [hidden]="!nameRef.errors.minlength" class="alert alert-danger">Please enter atleast 3 chars</div>
+      <div [hidden]="!nameRef.errors.pattern" class="alert alert-danger">Please enter a valid email address</div>
+    </div>
+</form>
