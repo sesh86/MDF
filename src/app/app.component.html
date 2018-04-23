@@ -1,14 +1,25 @@
-<style>form{margin:25px}</style>
+<style>form{margin:25px} td{vertical-align:top}</style>
 <h4>MDF : Form Builder</h4>
 <form [formGroup]="form" >
-  <table formGroupName="name">
-    <tr><td>Firstname</td><td><input formControlName="first" placeholder="First"></td></tr>
-    <tr><td>Lastname</td><td><input formControlName="last" placeholder="Last"></td></tr>
-    <tr><td>Email</td><td><input formControlName="email" placeholder="Email"></td></tr>
-  </table><br>
+<table>
+  <tr>
+    <td>Name</td>
+    <td>
+      <table formGroupName="name">
+        <tr><td><input formControlName="first" placeholder="First"></td></tr>
+        <tr><td><input formControlName="last" placeholder="Last"></td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td><input formControlName="email" placeholder="Email"></td>
+  </tr>
+  </table>
   <div class="alert alert-danger" *ngIf="form.status!='VALID'">
     Both First Name and Last Name are Mandatory and should have atleast 4 characters
   </div>
+
   <button>Submit</button>
 </form>
 <p>Value: {{ form.value | json }}</p>
